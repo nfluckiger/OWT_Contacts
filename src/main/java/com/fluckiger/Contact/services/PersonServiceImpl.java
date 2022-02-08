@@ -67,7 +67,7 @@ public class PersonServiceImpl implements PersonService{
         personDto.setLastname(person.getLastname());
         personDto.setFullname(person.getFullname());
         personDto.setAddress(person.getAddress());
-        personDto.setSkills(person.getSkills().stream().map(Skill::getName).collect(Collectors.toSet()));
+        personDto.setSkills(person.getSkills().stream().map(Skill::toString).collect(Collectors.toSet()));
         return personDto;
     }
 }

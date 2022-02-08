@@ -29,19 +29,19 @@ public class DataLoader implements CommandLineRunner{
     private void loadSkills() {
         if (skillRepository.count() == 0) {
             stest= Skill.builder()
-                    .name("Dance BEGINNER ")
+                    .name("Dance")
                     .level(SkillLevel.BEGINNER)
                     .build();
             skillRepository.save(stest);
             skillRepository.save(
                     Skill.builder()
-                            .name("Dance Intermediate ")
+                            .name("Dance")
                             .level(SkillLevel.INTERMEDIATE)
                             .build()
             );
             skillRepository.save(
                     Skill.builder()
-                            .name("Dance Master ")
+                            .name("Dance")
                             .level(SkillLevel.MASTER)
                             .build()
             );

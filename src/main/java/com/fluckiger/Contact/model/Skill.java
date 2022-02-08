@@ -23,4 +23,8 @@ public class Skill {
     @ManyToMany
     Set<Person> person = new HashSet<>();
 
+    @Override
+    public String toString(){
+        return name + " " +level;
+    }
 }
