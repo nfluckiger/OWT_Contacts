@@ -5,4 +5,8 @@ This api work with Gradle, JPA, Hibernate
 
 It's use to make link between two entity, person and skill.
 
-Link are made 
+
+## Swagger Documentations
+
+The swagger documentations, is available in HTML and JSON format
+
