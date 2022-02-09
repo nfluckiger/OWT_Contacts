@@ -23,20 +23,19 @@ public class PersonServiceImpl implements PersonService{
         List<Person> persons = new ArrayList<>();
         personRepository.findAll().forEach(persons::add);
         persons.stream().forEach(person -> {
-            PersonDTO p = mapEntityToDto(person);
-            personDTOs.add(p);
+            personDTOs.add(person.mapEntityToDto());
         });
         return personDTOs;
     }
 
     @Override
     public PersonDTO getPersonById(Long id){
-        return mapEntityToDto(personRepository.findById(id).get());
+        return personRepository.findById(id).get().mapEntityToDto();
     }
 
     @Override
     public PersonDTO insert(Person person){
-        return  mapEntityToDto(personRepository.save(person));
+        return personRepository.save(person).mapEntityToDto();
     }
 
 
@@ -59,14 +58,4 @@ public class PersonServiceImpl implements PersonService{
         personRepository.deleteById(personId);
     }
 
-    private PersonDTO mapEntityToDto(Person person){
-        PersonDTO personDto = new PersonDTO();
-        personDto.setId(person.getId());
-        personDto.setFirstname(person.getFirstname());
-        personDto.setLastname(person.getLastname());
-        personDto.setFullname(person.getFullname());
-        personDto.setAddress(person.getAddress());
-        personDto.setSkills(person.getSkills().stream().map(Skill::toString).collect(Collectors.toSet()));
-        return personDto;
-    }
 }

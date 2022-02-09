@@ -23,20 +23,20 @@ public class SkillServiceImpl implements SkillService {
         List<Skill> skills = new ArrayList<>();
         skillRepository.findAll().forEach(skills::add);
         skills.stream().forEach(skill -> {
-            SkillDTO s = mapEntityToDto(skill);
-            skillDtos.add(s);
+            ;
+            skillDtos.add(skill.mapEntityToDto());
         });
         return skillDtos;
     }
 
     @Override
     public SkillDTO getSkillById(Long id){
-        return mapEntityToDto(skillRepository.findById(id).get());
+        return skillRepository.findById(id).get().mapEntityToDto();
     }
 
     @Override
     public SkillDTO insert(Skill skill){
-        return  mapEntityToDto(skillRepository.save(skill));
+        return  skillRepository.save(skill).mapEntityToDto();
     }
 
 
@@ -55,12 +55,4 @@ public class SkillServiceImpl implements SkillService {
         skillRepository.deleteById(skillId);
     }
 
-    private SkillDTO mapEntityToDto(Skill skill){
-        SkillDTO skillDTO = new SkillDTO();
-        skillDTO.setId(skill.getId());
-        skillDTO.setName(skill.getName());
-        skillDTO.setLevel(skill.getLevel());
-        skillDTO.setPersons(skill.getPerson().stream().map(Person::getFullname).collect(Collectors.toSet()));
-        return skillDTO;
-    }
 }

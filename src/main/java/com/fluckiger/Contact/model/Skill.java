@@ -1,8 +1,10 @@
 package com.fluckiger.Contact.model;
+import com.fluckiger.Contact.DTO.SkillDTO;
 import lombok.*;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -26,5 +28,14 @@ public class Skill {
     @Override
     public String toString(){
         return name + " " +level;
+    }
+
+    public SkillDTO mapEntityToDto(){
+        SkillDTO skillDTO = new SkillDTO();
+        skillDTO.setId(this.getId());
+        skillDTO.setName(this.getName());
+        skillDTO.setLevel(this.getLevel());
+        skillDTO.setPersons(this.getPerson().stream().map(Person::getFullname).collect(Collectors.toSet()));
+        return skillDTO;
     }
 }
