@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class PersonServiceImpl implements PersonService{
 
     PersonRepository personRepository;
-
     public PersonServiceImpl(PersonRepository personRepository){
         this.personRepository = personRepository;
     }
@@ -45,12 +44,12 @@ public class PersonServiceImpl implements PersonService{
     public void updatePerson(Long id, Person person){
         Person personFromDb = personRepository.findById(id).get();
         System.out.println(personFromDb.toString());
-        personFromDb.setFirstname(person.getFirstname());
-        personFromDb.setLastname(person.getLastname());
-        personFromDb.setFullname(person.getFullname());
-        personFromDb.setEmail(person.getEmail());
-        personFromDb.setPassword(person.getPassword());
-        personFromDb.setAddress(person.getAddress());
+        if(person.getFirstname() != null){personFromDb.setFirstname(person.getFirstname());}
+        if(person.getLastname() != null){personFromDb.setLastname(person.getLastname());}
+        if(person.getFullname() != null){personFromDb.setFullname(person.getFullname());}
+        if(person.getEmail() != null){personFromDb.setEmail(person.getEmail());}
+        if(person.getPassword() != null){personFromDb.setPassword(person.getPassword());}
+        if(person.getAddress() != null){personFromDb.setAddress(person.getAddress());}
         personFromDb.setSkills(person.getSkills());
         personRepository.save(personFromDb);
     }

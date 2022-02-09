@@ -3,6 +3,8 @@ package com.fluckiger.Contact.controllers;
 import com.fluckiger.Contact.DTO.PersonDTO;
 import com.fluckiger.Contact.model.Person;
 import com.fluckiger.Contact.services.PersonService;
+import com.fluckiger.Contact.utility.dataValidator;
+import com.fluckiger.Contact.utility.personValidator;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import java.util.List;
 @RequestMapping("/api/v1/person")
 public class PersonController {
     PersonService personService;
+    dataValidator validator = new personValidator();
+
 
     public PersonController(PersonService personService){
         this.personService = personService;
@@ -34,6 +38,9 @@ public class PersonController {
     //The function receives a POST request, processes it, creates a new skill and saves it to the database, and returns a resource link to the created Person.
     @PostMapping(value = "/", consumes = {"application/json"})
     public ResponseEntity<PersonDTO> savePerson(@RequestBody Person person) {
+        if(!validator.validation(person)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         PersonDTO person1 = personService.insert(person);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("person", "/api/v1/person/" + person1.getId().toString());
@@ -43,6 +50,9 @@ public class PersonController {
     //The function receives a PUT request, updates the Person with the specified Id and returns the updated Person
     @PutMapping({"/{personId}"})
     public ResponseEntity<PersonDTO> updatePerson(@PathVariable("personId") Long personId, @RequestBody Person person) {
+        if(!validator.validation(person)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         personService.updatePerson(personId, person);
         return new ResponseEntity<>(personService.getPersonById(personId), HttpStatus.OK);
     }

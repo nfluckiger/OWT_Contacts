@@ -44,8 +44,9 @@ public class SkillServiceImpl implements SkillService {
     public void updateSkill(Long id, Skill skill){
         Skill skilFromDb = skillRepository.findById(id).get();
         System.out.println(skilFromDb.toString());
-        skilFromDb.setLevel(skill.getLevel());
-        skilFromDb.setName(skill.getName());
+        if(skill.getLevel() != null)skilFromDb.setLevel(skill.getLevel());
+        if(skill.getName() != null)skilFromDb.setName(skill.getName());
+        if(skill.getPerson() != null)skilFromDb.setPerson(skill.getPerson());
         skillRepository.save(skilFromDb);
     }
 
